@@ -1,343 +1,178 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Othoy ✨</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Caveat:wght@600&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            overflow-x: hidden;
-            user-select: none;
-        }
-        .font-serif {
-            font-family: 'Playfair Display', serif;
-        }
-        .font-handwriting {
-            font-family: 'Caveat', cursive;
-        }
-        .fade-in {
-            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        .bounce-gentle {
-            animation: bounceGentle 3s ease-in-out infinite;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.96); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes bounceGentle {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        .sparkle {
-            position: absolute;
-            background: radial-gradient(circle, #fff 0%, rgba(255,255,255,0) 70%);
-            border-radius: 50%;
-            animation: twinkle 2s infinite ease-in-out;
-        }
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
-        .cake-left, .cake-right {
-            transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        .sliced .cake-left {
-            transform: translateX(-35px) rotate(-6deg);
-        }
-        .sliced .cake-right {
-            transform: translateX(35px) rotate(6deg);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Little World For You ❤️</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-[#fff9fa] text-[#4a403a] min-h-screen flex flex-col items-center justify-center relative selection:bg-[#ffcad4]">
+<body>
 
-    <div id="sparkles-container" class="absolute inset-0 pointer-events-none overflow-hidden z-0"></div>
+  <div class="hearts" id="hearts"></div>
 
-    <main id="app" class="relative z-10 w-full max-w-md min-h-screen flex flex-col items-center justify-center p-6 text-center"></main>
+  <!-- MUSIC -->
+  <audio id="music" loop>
+    <source src="birthday-song.mp3" type="audio/mpeg">
+  </audio>
 
-    <script>
-        const sound = {
-            ctx: null,
-            init: function() {
-                if (!this.ctx) {
-                    const AudioCtx = window.AudioContext || window.webkitAudioContext;
-                    if (AudioCtx) this.ctx = new AudioCtx();
-                }
-            },
-            playChime: function() {
-                try {
-                    this.init();
-                    if (!this.ctx) return;
-                    const now = this.ctx.currentTime;
-                    const osc = this.ctx.createOscillator();
-                    const gain = this.ctx.createGain();
-                    osc.type = 'sine';
-                    osc.frequency.setValueAtTime(587.33, now);
-                    osc.frequency.exponentialRampToValueAtTime(880, now + 0.3);
-                    gain.gain.setValueAtTime(0.15, now);
-                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
-                    osc.connect(gain);
-                    gain.connect(this.ctx.destination);
-                    osc.start(now);
-                    osc.stop(now + 0.6);
-                } catch(e) {}
-            },
-            playCut: function() {
-                try {
-                    this.init();
-                    if (!this.ctx) return;
-                    const now = this.ctx.currentTime;
-                    const osc = this.ctx.createOscillator();
-                    const gain = this.ctx.createGain();
-                    osc.type = 'triangle';
-                    osc.frequency.setValueAtTime(300, now);
-                    osc.frequency.linearRampToValueAtTime(150, now + 0.2);
-                    gain.gain.setValueAtTime(0.2, now);
-                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
-                    osc.connect(gain);
-                    gain.connect(this.ctx.destination);
-                    osc.start(now);
-                    osc.stop(now + 0.25);
-                } catch(e) {}
-            },
-            playWish: function() {
-                try {
-                    this.init();
-                    if (!this.ctx) return;
-                    const notes = [523.25, 659.25, 783.99, 1046.50];
-                    notes.forEach((freq, idx) => {
-                        const now = this.ctx.currentTime + idx * 0.12;
-                        const osc = this.ctx.createOscillator();
-                        const gain = this.ctx.createGain();
-                        osc.type = 'sine';
-                        osc.frequency.setValueAtTime(freq, now);
-                        gain.gain.setValueAtTime(0.12, now);
-                        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
-                        osc.connect(gain);
-                        gain.connect(this.ctx.destination);
-                        osc.start(now);
-                        osc.stop(now + 0.5);
-                    });
-                } catch(e) {}
-            }
-        };
+  <button class="music-btn" onclick="toggleMusic()" id="musicBtn">
+    ♫ Music
+  </button>
 
-        const container = document.getElementById('sparkles-container');
-        if (container) {
-            for (let i = 0; i < 25; i++) {
-                const s = document.createElement('div');
-                s.className = 'sparkle';
-                s.style.width = (Math.random() * 6 + 2) + 'px';
-                s.style.height = s.style.width;
-                s.style.top = (Math.random() * 100) + '%';
-                s.style.left = (Math.random() * 100) + '%';
-                s.style.animationDelay = (Math.random() * 2) + 's';
-                container.appendChild(s);
-            }
-        }
+  <!-- WELCOME -->
+  <section class="screen active" id="welcome">
+    <div class="welcome-card">
+      <div class="small-text">A SPECIAL SURPRISE FOR YOU</div>
+      <div class="big-heart">♡</div>
+      <h1>Hello, Beautiful!</h1>
+      <p>Someone made something special just for you...</p>
+      <button class="main-btn" onclick="startSurprise()">
+        Open Your Surprise 💌
+      </button>
+    </div>
+  </section>
 
-        let currentStep = 1;
-        const recipientName = "Athoi";
-        const birthdayDate = "Special Day";
-        let cakeSliced = false;
+  <!-- GIFT -->
+  <section class="screen" id="gift">
+    <div class="content">
+      <p class="tag">YOUR SPECIAL DAY 🎀</p>
+      <h1>A Little Gift For You</h1>
+      <p>Tap the gift box to discover your surprise.</p>
 
-        function nextStep() {
-            sound.playChime();
-            currentStep++;
-            renderStep();
-        }
+      <div class="gift" id="giftBox" onclick="openGift()">
+        <div class="gift-lid"></div>
+        <div class="gift-box"></div>
+        <div class="gift-ribbon"></div>
+        <div class="gift-bow">🎀</div>
+      </div>
 
-        function restartApp() {
-            sound.playChime();
-            currentStep = 1;
-            cakeSliced = false;
-            renderStep();
-        }
+      <p class="hint" id="giftHint">Tap to open your gift ✨</p>
+    </div>
+  </section>
 
-        function sliceCake() {
-            if (cakeSliced) {
-                nextStep();
-                return;
-            }
-            sound.playCut();
-            cakeSliced = true;
-            const cakeContainer = document.getElementById('cake-container');
-            const cutLine = document.getElementById('cut-line');
-            const cakeMsg = document.getElementById('cake-msg');
-            const cakeBtn = document.getElementById('cake-btn');
+  <!-- BIRTHDAY -->
+  <section class="screen" id="birthday">
+    <div class="content">
+      <p class="tag">TODAY IS ALL ABOUT YOU</p>
+      <h1 class="birthday-title">
+        Happy Birthday!
+      </h1>
+      <h2 class="person-name">My Special Person ❤️</h2>
 
-            if (cakeContainer) cakeContainer.classList.add('sliced');
-            if (cutLine) cutLine.style.display = 'none';
-            if (cakeMsg) cakeMsg.style.display = 'block';
-            if (cakeBtn) cakeBtn.textContent = 'Make a wish ✨';
-        }
+      <div class="cake">
+        <div class="flame" id="flame">🔥</div>
+        <div class="candle"></div>
+        <div class="cake-top"></div>
+        <div class="cake-middle"></div>
+        <div class="cake-bottom"></div>
+      </div>
 
-        function makeWish() {
-            sound.playWish();
-            const btn = document.getElementById('wish-btn');
-            const status = document.getElementById('wish-status');
-            if (btn) {
-                btn.style.opacity = '0.5';
-                btn.style.pointerEvents = 'none';
-            }
-            if (status) {
-                status.textContent = "Your special wish has been sent to the stars ✨";
-                status.style.opacity = '1';
-            }
-            setTimeout(() => {
-                currentStep++;
-                renderStep();
-            }, 2000);
-        }
+      <p class="message">
+        Make a wish and blow out your candle! ✨
+      </p>
 
-        function renderStep() {
-            const app = document.getElementById('app');
-            if (!app) return;
+      <button class="main-btn" onclick="blowCandle()">
+        Blow The Candle 🌬️
+      </button>
 
-            app.innerHTML = '';
+      <p id="wishMessage"></p>
+    </div>
+  </section>
 
-            if (currentStep === 2) {
-                document.body.className = "bg-[#141226] text-white min-h-screen flex flex-col items-center justify-center relative selection:bg-pink-500 transition-colors duration-1000";
-            } else {
-                document.body.className = "bg-[#fff9fa] text-[#4a403a] min-h-screen flex flex-col items-center justify-center relative selection:bg-[#ffcad4] transition-colors duration-1000";
-            }
+  <!-- MEMORIES -->
+  <section class="screen" id="memories">
+    <div class="content">
+      <p class="tag">LITTLE MOMENTS, BIG MEMORIES</p>
+      <h1>Beautiful Memories 📸</h1>
+      <p>Every moment is a little treasure.</p>
 
-            const wrapper = document.createElement('div');
-            wrapper.className = "fade-in flex flex-col items-center w-full";
+      <div class="gallery">
+        <div class="photo" onclick="showPhoto(this)">
+          <img src="photos/photo1.jpg" alt="Memory 1">
+          <span>Sweet Memory ❤️</span>
+        </div>
 
-            if (currentStep === 1) {
-                wrapper.innerHTML = `
-                    <p class="text-xs uppercase tracking-[0.2em] text-[#d87093] font-semibold mb-2">just for you, Athoi ✨</p>
-                    <h1 class="text-3xl sm:text-4xl font-serif font-bold text-[#354f52] mb-1">A Little Surprise Awaits</h1>
-                    <p class="text-sm text-[#70655d] mb-8">Open this special envelope to begin.</p>
-                    <div class="relative w-72 h-56 mb-8 bounce-gentle flex items-center justify-center">
-                        <div class="absolute -left-10 bottom-6 z-20 w-24 h-28 bg-[#ffb5a7] rounded-full border-4 border-white shadow-md flex flex-col items-center justify-center transform -rotate-12">
-                            <div class="text-2xl">🧸</div>
-                            <div class="bg-white px-2 py-0.5 rounded-full text-[10px] font-bold text-[#d87093] shadow-sm mt-1">for ${recipientName}</div>
-                        </div>
-                        <div class="absolute inset-x-0 bottom-0 h-44 bg-[#fce1e4] rounded-2xl shadow-xl border border-[#f7cad0] flex items-center justify-center overflow-hidden">
-                            <div class="z-10 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-md border border-[#ffcad4] flex items-center gap-2">
-                                <span class="text-red-500">💌</span>
-                                <div class="flex gap-1">
-                                    <span class="w-2 h-2 rounded-full bg-[#d87093]"></span>
-                                    <span class="w-2 h-2 rounded-full bg-[#ffb5a7]"></span>
-                                </div>
-                            </div>
-                            <div class="absolute top-3 right-6 text-2xl">🌸</div>
-                        </div>
-                    </div>
-                    <button id="btn-next" class="w-full py-4 px-8 bg-[#d87093] hover:bg-[#c45c7f] text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 text-base">Open your surprise ✨</button>
-                `;
-                app.appendChild(wrapper);
-                document.getElementById('btn-next').addEventListener('click', nextStep);
+        <div class="photo" onclick="showPhoto(this)">
+          <img src="photos/photo2.jpg" alt="Memory 2">
+          <span>Little Moments 🌸</span>
+        </div>
 
-            } else if (currentStep === 2) {
-                wrapper.innerHTML = `
-                    <div class="text-4xl mb-4 animate-pulse">🌙</div>
-                    <h1 class="text-3xl sm:text-4xl font-serif font-bold mb-2">Quiet for a moment...</h1>
-                    <h2 class="text-2xl font-serif text-[#ffcad4] mb-3">The magical lights are off.</h2>
-                    <p class="text-sm text-gray-400 mb-10">Let's bring some brightness into the room.</p>
-                    <div class="w-32 h-32 bg-pink-900/40 rounded-full flex items-center justify-center text-5xl mb-8 border border-pink-500/30 bounce-gentle relative">
-                        ✨ 🧸
-                        <div class="absolute -top-2 right-4 text-xs bg-pink-600 px-2 py-0.5 rounded-full text-white">ready!</div>
-                    </div>
-                    <button id="btn-next" class="w-full py-4 px-8 bg-amber-100 hover:bg-white text-[#141226] font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 text-base">Turn on the lights 💡</button>
-                `;
-                app.appendChild(wrapper);
-                document.getElementById('btn-next').addEventListener('click', nextStep);
+        <div class="photo" onclick="showPhoto(this)">
+          <img src="photos/photo3.jpg" alt="Memory 3">
+          <span>Forever Special ✨</span>
+        </div>
+      </div>
 
-            } else if (currentStep === 3) {
-                wrapper.innerHTML = `
-                    <p class="text-xs uppercase tracking-[0.2em] text-[#d87093] font-semibold mb-1">Happy Birthday to you!</p>
-                    <h1 class="text-3xl sm:text-4xl font-serif font-bold text-[#354f52] mb-3">Happy Birthday, ${recipientName}! 🎉</h1>
-                    <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-[#fce1e4] rounded-full text-xs font-medium text-[#d87093] mb-6 shadow-sm">
-                        <span>✨</span> Shine Bright Today
-                    </div>
-                    <div class="relative w-full h-56 bg-gradient-to-b from-[#fff1f3] to-[#ffe3e8] rounded-3xl p-6 shadow-inner flex flex-col items-center justify-center mb-8 border border-[#f7cad0]">
-                        <div class="absolute top-3 left-4 text-2xl">🎈</div>
-                        <div class="absolute top-4 right-6 text-2xl">💐</div>
-                        <div class="text-5xl mb-2 bounce-gentle">🧸🎂</div>
-                        <p class="font-handwriting text-2xl text-[#d87093] transform rotate-[-3deg]">It's your special day, Athoi!</p>
-                    </div>
-                    <button id="btn-next" class="w-full py-4 px-8 bg-[#d87093] hover:bg-[#c45c7f] text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 text-base">Let's cut the cake 🎂</button>
-                `;
-                app.appendChild(wrapper);
-                document.getElementById('btn-next').addEventListener('click', nextStep);
+      <button class="main-btn" onclick="nextScreen('letter')">
+        One More Surprise 💌
+      </button>
+    </div>
+  </section>
 
-            } else if (currentStep === 4) {
-                wrapper.innerHTML = `
-                    <p class="text-xs uppercase tracking-[0.2em] text-[#d87093] font-semibold mb-1">Cake Celebration 🍰</p>
-                    <h1 class="text-3xl font-serif font-bold text-[#354f52] mb-1">Make the first cut ✨</h1>
-                    <p class="text-xs text-[#70655d] mb-6">Tap the cake or press the button below.</p>
-                    <div id="cake-container" class="relative w-64 h-56 flex items-center justify-center mb-8 cursor-pointer select-none">
-                        <div id="cut-line" class="absolute inset-y-0 w-0.5 border-r-2 border-dashed border-red-400 z-30"></div>
-                        <div class="cake-left absolute left-0 w-32 h-full flex flex-col items-end overflow-hidden">
-                            <div class="w-64 h-48 bg-[#ffb5a7] rounded-t-3xl shadow-md border-b-8 border-[#fcd5ce] relative flex items-center justify-center">
-                                <div class="absolute top-2 left-10 text-xl">🕯️🍓</div>
-                                <div class="absolute top-12 left-8 text-2xl font-serif font-bold text-white/40">🎂</div>
-                            </div>
-                        </div>
-                        <div class="cake-right absolute right-0 w-32 h-full flex flex-col items-start overflow-hidden">
-                            <div class="w-64 h-48 bg-[#ffb5a7] rounded-t-3xl shadow-md border-b-8 border-[#fcd5ce] relative flex items-center justify-center" style="margin-left: -32px;">
-                                <div class="absolute top-2 right-10 text-xl">🍓🕯️</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="cake-msg" style="display:none;" class="mb-4 text-center">
-                        <p class="text-lg font-serif font-bold text-[#d87093]">Yay! Perfect slice! 🎂</p>
-                        <p class="text-xs text-[#70655d]">Wishing you endless sweetness this year.</p>
-                    </div>
-                    <button id="cake-btn" class="w-full py-4 px-8 bg-[#d87093] hover:bg-[#c45c7f] text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 text-base">Cut the cake 🔪</button>
-                `;
-                app.appendChild(wrapper);
-                document.getElementById('cake-container').addEventListener('click', sliceCake);
-                document.getElementById('cake-btn').addEventListener('click', sliceCake);
+  <!-- LETTER -->
+  <section class="screen" id="letter">
+    <div class="content">
+      <p class="tag">A LITTLE MESSAGE FOR YOU</p>
+      <h1>A Secret Letter 💌</h1>
 
-            } else if (currentStep === 5) {
-                wrapper.innerHTML = `
-                    <div class="text-6xl mb-4 bounce-gentle">🧸🙏</div>
-                    <h1 class="text-3xl font-serif font-bold text-[#354f52] mb-2">Time for a Wish...</h1>
-                    <p class="text-sm text-[#70655d] mb-8">Close your eyes and make a heartfelt wish, Athoi.</p>
-                    <button id="wish-btn" class="w-full py-4 px-8 bg-[#d87093] hover:bg-[#c45c7f] text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 text-base">I made my wish ✨</button>
-                    <p id="wish-status" class="mt-4 text-sm font-handwriting text-[#d87093] opacity-0 transition-opacity duration-700"></p>
-                `;
-                app.appendChild(wrapper);
-                document.getElementById('wish-btn').addEventListener('click', makeWish);
+      <div class="envelope" onclick="openLetter()" id="envelope">
+        <div class="envelope-back"></div>
+        <div class="letter-paper">
+          <h2>Dear Special One ❤️</h2>
+          <p>
+            Today is your special day.
+            I hope your life is filled with
+            happiness, laughter and beautiful
+            memories.
+          </p>
+          <p>
+            Keep shining, keep smiling,
+            and never stop being amazing.
+          </p>
+          <h3>With lots of love 💗</h3>
+        </div>
+        <div class="envelope-front"></div>
+        <div class="envelope-flap"></div>
+      </div>
 
-            } else if (currentStep === 6) {
-                wrapper.innerHTML = `
-                    <h1 class="text-2xl sm:text-3xl font-serif font-bold text-[#354f52] mb-1">Cherished Memories ✨</h1>
-                    <p class="text-xs text-[#70655d] mb-6">Little moments that make life beautiful.</p>
-                    <div class="grid grid-cols-2 gap-3 w-full mb-8">
-                        <div class="bg-white p-2.5 pb-6 rounded shadow-md transform -rotate-3 hover:rotate-0 transition-transform">
-                            <div class="w-full h-28 bg-[#fcd5ce] rounded flex items-center justify-center text-3xl mb-2">🧸☀️</div>
-                            <p class="font-handwriting text-sm text-[#4a403a]">bright smiles</p>
-                        </div>
-                        <div class="bg-white p-2.5 pb-6 rounded shadow-md transform rotate-3 hover:rotate-0 transition-transform">
-                            <div class="w-full h-28 bg-[#d87093]/20 rounded flex items-center justify-center text-3xl mb-2">🌙✨</div>
-                            <p class="font-handwriting text-sm text-[#4a403a]">sweet dreams</p>
-                        </div>
-                        <div class="bg-white p-2.5 pb-6 rounded shadow-md transform rotate-2 hover:rotate-0 transition-transform">
-                            <div class="w-full h-28 bg-[#ffb5a7]/30 rounded flex items-center justify-center text-3xl mb-2">🧁🎂</div>
-                            <p class="font-handwriting text-sm text-[#4a403a]">celebrations</p>
-                        </div>
-                        <div class="bg-white p-2.5 pb-6 rounded shadow-md transform -rotate-2 hover:rotate-0 transition-transform">
-                            <div class="w-full h-28 bg-[#f7cad0]/40 rounded flex items-center justify-center text-3xl mb-2">💖🌸</div>
-                            <p class="font-handwriting text-sm text-[#4a403a]">happy moments</p>
-                        </div>
-                    </div>
-                    <button id="btn-next" class="w-full py-4 px-8 bg-[#d87093] hover:bg-[#c45c7f] text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 text-base">Read your letter 💌</button>
-                `;
-                app.appendChild(wrapper);
-                document.getElementById('btn-next').addEventListener('click', nextStep);
+      <p id="letterHint">Tap the envelope to open it.</p>
 
-            } else if (currentStep === 7) {
-                wrapper.className = "fade-in flex flex-col items-center w-full text-left";
-                wrapper.innerHTML = `
-                    <div class="w-full bg-white p-6 sm:p-8 rounded-2xl shadow-xl border border-[#fcd5ce] mb-6 max-h-[65vh] overflow-y-auto">
-                        <p class="text-xs font-semibold text-[#d87093] mb-3">Dear ${recipientName},</p>
-    
+      <button class="main-btn" onclick="nextScreen('final')">
+        Final Surprise ✨
+      </button>
+    </div>
+  </section>
+
+  <!-- FINAL -->
+  <section class="screen" id="final">
+    <div class="content final-content">
+      <div class="final-heart">💗</div>
+      <p class="tag">A DAY AS BEAUTIFUL AS YOU</p>
+      <h1>Happy Birthday!</h1>
+
+      <h2>To My Special Someone</h2>
+
+      <p class="final-message">
+        May every new day bring you closer
+        to your dreams. You deserve all the
+        happiness in the world.
+      </p>
+
+      <h2 class="love-text">Stay Happy Always ❤️</h2>
+
+      <button class="main-btn" onclick="celebrate()">
+        Celebrate Again 🎉
+      </button>
+    </div>
+  </section>
+
+  <!-- PHOTO MODAL -->
+  <div class="modal" id="photoModal" onclick="closePhoto()">
+    <span class="close">×</span>
+    <img id="largePhoto" alt="Selected memory">
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
