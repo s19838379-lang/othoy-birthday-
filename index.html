@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Little Something For You ✨</title>
+    <title>Happy Birthday Othoy ✨</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Caveat:wght@600&display=swap" rel="stylesheet">
     <style>
@@ -53,7 +53,7 @@
         }
     </style>
 </head>
-<body class="bg-[#fdfbf7] text-[#4a403a] min-h-screen flex flex-col items-center justify-center relative selection:bg-[#ffcad4]">
+<body class="bg-[#fff9fa] text-[#4a403a] min-h-screen flex flex-col items-center justify-center relative selection:bg-[#ffcad4]">
 
     <div id="sparkles-container" class="absolute inset-0 pointer-events-none overflow-hidden z-0"></div>
 
@@ -128,7 +128,7 @@
 
         const container = document.getElementById('sparkles-container');
         if (container) {
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 25; i++) {
                 const s = document.createElement('div');
                 s.className = 'sparkle';
                 s.style.width = (Math.random() * 6 + 2) + 'px';
@@ -142,7 +142,7 @@
 
         let currentStep = 1;
         const recipientName = "Athoi";
-        const birthdayDate = "28 September";
+        const birthdayDate = "Special Day";
         let cakeSliced = false;
 
         function nextStep() {
@@ -185,7 +185,7 @@
                 btn.style.pointerEvents = 'none';
             }
             if (status) {
-                status.textContent = "Somewhere, a tiny star just said yes ✨";
+                status.textContent = "Your special wish has been sent to the stars ✨";
                 status.style.opacity = '1';
             }
             setTimeout(() => {
@@ -201,9 +201,9 @@
             app.innerHTML = '';
 
             if (currentStep === 2) {
-                document.body.className = "bg-[#111122] text-white min-h-screen flex flex-col items-center justify-center relative selection:bg-purple-500 transition-colors duration-1000";
+                document.body.className = "bg-[#141226] text-white min-h-screen flex flex-col items-center justify-center relative selection:bg-pink-500 transition-colors duration-1000";
             } else {
-                document.body.className = "bg-[#fdfbf7] text-[#4a403a] min-h-screen flex flex-col items-center justify-center relative selection:bg-[#ffcad4] transition-colors duration-1000";
+                document.body.className = "bg-[#fff9fa] text-[#4a403a] min-h-screen flex flex-col items-center justify-center relative selection:bg-[#ffcad4] transition-colors duration-1000";
             }
 
             const wrapper = document.createElement('div');
@@ -211,23 +211,23 @@
 
             if (currentStep === 1) {
                 wrapper.innerHTML = `
-                    <p class="text-xs uppercase tracking-[0.2em] text-[#b5838d] font-semibold mb-2">a little something ✨</p>
-                    <h1 class="text-3xl sm:text-4xl font-serif font-bold text-[#354f52] mb-1">There is something for you</h1>
-                    <p class="text-sm text-[#70655d] mb-8">A tiny birthday surprise, made just for you.</p>
+                    <p class="text-xs uppercase tracking-[0.2em] text-[#d87093] font-semibold mb-2">just for you, Athoi ✨</p>
+                    <h1 class="text-3xl sm:text-4xl font-serif font-bold text-[#354f52] mb-1">A Little Surprise Awaits</h1>
+                    <p class="text-sm text-[#70655d] mb-8">Open this special envelope to begin.</p>
                     <div class="relative w-72 h-56 mb-8 bounce-gentle flex items-center justify-center">
-                        <div class="absolute -left-10 bottom-6 z-20 w-24 h-28 bg-[#f4a261] rounded-full border-4 border-white shadow-md flex flex-col items-center justify-center transform -rotate-12">
+                        <div class="absolute -left-10 bottom-6 z-20 w-24 h-28 bg-[#ffb5a7] rounded-full border-4 border-white shadow-md flex flex-col items-center justify-center transform -rotate-12">
                             <div class="text-2xl">🧸</div>
-                            <div class="bg-white px-2 py-0.5 rounded-full text-[10px] font-bold text-[#b5838d] shadow-sm mt-1">for ${recipientName}</div>
+                            <div class="bg-white px-2 py-0.5 rounded-full text-[10px] font-bold text-[#d87093] shadow-sm mt-1">for ${recipientName}</div>
                         </div>
-                        <div class="absolute inset-x-0 bottom-0 h-44 bg-[#f3ded8] rounded-2xl shadow-xl border border-[#e6ccb2] flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-x-0 bottom-0 h-44 bg-[#fce1e4] rounded-2xl shadow-xl border border-[#f7cad0] flex items-center justify-center overflow-hidden">
                             <div class="z-10 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-md border border-[#ffcad4] flex items-center gap-2">
-                                <span class="text-red-400">💌</span>
+                                <span class="text-red-500">💌</span>
                                 <div class="flex gap-1">
+                                    <span class="w-2 h-2 rounded-full bg-[#d87093]"></span>
                                     <span class="w-2 h-2 rounded-full bg-[#ffb5a7]"></span>
-                                    <span class="w-2 h-2 rounded-full bg-[#fcd5ce]"></span>
                                 </div>
                             </div>
-                            <div class="absolute top-3 right-6 text-2xl">🌾</div>
+                            <div class="absolute top-3 right-6 text-2xl">🌸</div>
                         </div>
                     </div>
                     <button id="btn-next" class="w-full py-4 px-8 bg-[#d87093] hover:bg-[#c45c7f] text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 text-base">Open your surprise ✨</button>
@@ -238,39 +238,39 @@
             } else if (currentStep === 2) {
                 wrapper.innerHTML = `
                     <div class="text-4xl mb-4 animate-pulse">🌙</div>
-                    <h1 class="text-3xl sm:text-4xl font-serif font-bold mb-2">Shhh...</h1>
-                    <h2 class="text-2xl font-serif text-[#ffcad4] mb-3">The room is waiting for you.</h2>
-                    <p class="text-sm text-gray-400 mb-10">Someone left the lights off on purpose.</p>
-                    <div class="w-32 h-32 bg-purple-900/40 rounded-full flex items-center justify-center text-5xl mb-8 border border-purple-500/30 bounce-gentle relative">
-                        💤 🧸
-                        <div class="absolute -top-2 right-4 text-xs bg-purple-600 px-2 py-0.5 rounded-full">party hat ready</div>
+                    <h1 class="text-3xl sm:text-4xl font-serif font-bold mb-2">Quiet for a moment...</h1>
+                    <h2 class="text-2xl font-serif text-[#ffcad4] mb-3">The magical lights are off.</h2>
+                    <p class="text-sm text-gray-400 mb-10">Let's bring some brightness into the room.</p>
+                    <div class="w-32 h-32 bg-pink-900/40 rounded-full flex items-center justify-center text-5xl mb-8 border border-pink-500/30 bounce-gentle relative">
+                        ✨ 🧸
+                        <div class="absolute -top-2 right-4 text-xs bg-pink-600 px-2 py-0.5 rounded-full text-white">ready!</div>
                     </div>
-                    <button id="btn-next" class="w-full py-4 px-8 bg-amber-100 hover:bg-white text-[#111122] font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 text-base">Turn on the lights 💡</button>
+                    <button id="btn-next" class="w-full py-4 px-8 bg-amber-100 hover:bg-white text-[#141226] font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 text-base">Turn on the lights 💡</button>
                 `;
                 app.appendChild(wrapper);
                 document.getElementById('btn-next').addEventListener('click', nextStep);
 
             } else if (currentStep === 3) {
                 wrapper.innerHTML = `
-                    <p class="text-xs uppercase tracking-[0.2em] text-[#b5838d] font-semibold mb-1">Look who is having a birthday...</p>
-                    <h1 class="text-3xl sm:text-4xl font-serif font-bold text-[#354f52] mb-3">Happy Birthday, ${recipientName} ✨</h1>
-                    <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-[#f0ebd8] rounded-full text-xs font-medium text-[#70655d] mb-6 shadow-sm">
-                        <span>🎂</span> ${birthdayDate}
+                    <p class="text-xs uppercase tracking-[0.2em] text-[#d87093] font-semibold mb-1">Happy Birthday to you!</p>
+                    <h1 class="text-3xl sm:text-4xl font-serif font-bold text-[#354f52] mb-3">Happy Birthday, ${recipientName}! 🎉</h1>
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-[#fce1e4] rounded-full text-xs font-medium text-[#d87093] mb-6 shadow-sm">
+                        <span>✨</span> Shine Bright Today
                     </div>
-                    <div class="relative w-full h-56 bg-gradient-to-b from-[#fce1e4] to-[#fcf4f6] rounded-3xl p-6 shadow-inner flex flex-col items-center justify-center mb-8 border border-[#f7cad0]">
+                    <div class="relative w-full h-56 bg-gradient-to-b from-[#fff1f3] to-[#ffe3e8] rounded-3xl p-6 shadow-inner flex flex-col items-center justify-center mb-8 border border-[#f7cad0]">
                         <div class="absolute top-3 left-4 text-2xl">🎈</div>
                         <div class="absolute top-4 right-6 text-2xl">💐</div>
-                        <div class="text-5xl mb-2 bounce-gentle">🧸🎉</div>
-                        <p class="font-handwriting text-2xl text-[#d87093] transform rotate-[-3deg]">yay, you are here!</p>
+                        <div class="text-5xl mb-2 bounce-gentle">🧸🎂</div>
+                        <p class="font-handwriting text-2xl text-[#d87093] transform rotate-[-3deg]">It's your special day, Athoi!</p>
                     </div>
-                    <button id="btn-next" class="w-full py-4 px-8 bg-[#d87093] hover:bg-[#c45c7f] text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 text-base">There is more 🎈</button>
+                    <button id="btn-next" class="w-full py-4 px-8 bg-[#d87093] hover:bg-[#c45c7f] text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 text-base">Let's cut the cake 🎂</button>
                 `;
                 app.appendChild(wrapper);
                 document.getElementById('btn-next').addEventListener('click', nextStep);
 
             } else if (currentStep === 4) {
                 wrapper.innerHTML = `
-                    <p class="text-xs uppercase tracking-[0.2em] text-[#d87093] font-semibold mb-1">Cake time 🎉</p>
+                    <p class="text-xs uppercase tracking-[0.2em] text-[#d87093] font-semibold mb-1">Cake Celebration 🍰</p>
                     <h1 class="text-3xl font-serif font-bold text-[#354f52] mb-1">Make the first cut ✨</h1>
                     <p class="text-xs text-[#70655d] mb-6">Tap the cake or press the button below.</p>
                     <div id="cake-container" class="relative w-64 h-56 flex items-center justify-center mb-8 cursor-pointer select-none">
@@ -288,8 +288,8 @@
                         </div>
                     </div>
                     <div id="cake-msg" style="display:none;" class="mb-4 text-center">
-                        <p class="text-lg font-serif font-bold text-[#d87093]">You did it! 🎂</p>
-                        <p class="text-xs text-[#70655d]">The first slice is always the sweetest one.</p>
+                        <p class="text-lg font-serif font-bold text-[#d87093]">Yay! Perfect slice! 🎂</p>
+                        <p class="text-xs text-[#70655d]">Wishing you endless sweetness this year.</p>
                     </div>
                     <button id="cake-btn" class="w-full py-4 px-8 bg-[#d87093] hover:bg-[#c45c7f] text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 text-base">Cut the cake 🔪</button>
                 `;
@@ -300,34 +300,34 @@
             } else if (currentStep === 5) {
                 wrapper.innerHTML = `
                     <div class="text-6xl mb-4 bounce-gentle">🧸🙏</div>
-                    <h1 class="text-3xl font-serif font-bold text-[#354f52] mb-2">Close your eyes...</h1>
-                    <p class="text-sm text-[#70655d] mb-8">Make a little wish for the year ahead.</p>
+                    <h1 class="text-3xl font-serif font-bold text-[#354f52] mb-2">Time for a Wish...</h1>
+                    <p class="text-sm text-[#70655d] mb-8">Close your eyes and make a heartfelt wish, Athoi.</p>
                     <button id="wish-btn" class="w-full py-4 px-8 bg-[#d87093] hover:bg-[#c45c7f] text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 text-base">I made my wish ✨</button>
-                    <p id="wish-status" class="mt-4 text-sm font-handwriting text-[#b5838d] opacity-0 transition-opacity duration-700"></p>
+                    <p id="wish-status" class="mt-4 text-sm font-handwriting text-[#d87093] opacity-0 transition-opacity duration-700"></p>
                 `;
                 app.appendChild(wrapper);
                 document.getElementById('wish-btn').addEventListener('click', makeWish);
 
             } else if (currentStep === 6) {
                 wrapper.innerHTML = `
-                    <h1 class="text-2xl sm:text-3xl font-serif font-bold text-[#354f52] mb-1">Some moments are worth keeping.</h1>
-                    <p class="text-xs text-[#70655d] mb-6">Here is to all the laughs, chaos, and little moments.</p>
+                    <h1 class="text-2xl sm:text-3xl font-serif font-bold text-[#354f52] mb-1">Cherished Memories ✨</h1>
+                    <p class="text-xs text-[#70655d] mb-6">Little moments that make life beautiful.</p>
                     <div class="grid grid-cols-2 gap-3 w-full mb-8">
                         <div class="bg-white p-2.5 pb-6 rounded shadow-md transform -rotate-3 hover:rotate-0 transition-transform">
                             <div class="w-full h-28 bg-[#fcd5ce] rounded flex items-center justify-center text-3xl mb-2">🧸☀️</div>
-                            <p class="font-handwriting text-sm text-[#4a403a]">that sunny picnic</p>
+                            <p class="font-handwriting text-sm text-[#4a403a]">bright smiles</p>
                         </div>
                         <div class="bg-white p-2.5 pb-6 rounded shadow-md transform rotate-3 hover:rotate-0 transition-transform">
-                            <div class="w-full h-28 bg-[#b5838d]/20 rounded flex items-center justify-center text-3xl mb-2">🌙✨</div>
-                            <p class="font-handwriting text-sm text-[#4a403a]">counting stars</p>
+                            <div class="w-full h-28 bg-[#d87093]/20 rounded flex items-center justify-center text-3xl mb-2">🌙✨</div>
+                            <p class="font-handwriting text-sm text-[#4a403a]">sweet dreams</p>
                         </div>
                         <div class="bg-white p-2.5 pb-6 rounded shadow-md transform rotate-2 hover:rotate-0 transition-transform">
                             <div class="w-full h-28 bg-[#ffb5a7]/30 rounded flex items-center justify-center text-3xl mb-2">🧁🎂</div>
-                            <p class="font-handwriting text-sm text-[#4a403a]">the great baking</p>
+                            <p class="font-handwriting text-sm text-[#4a403a]">celebrations</p>
                         </div>
                         <div class="bg-white p-2.5 pb-6 rounded shadow-md transform -rotate-2 hover:rotate-0 transition-transform">
-                            <div class="w-full h-28 bg-[#e5989b]/20 rounded flex items-center justify-center text-3xl mb-2">🌍💖</div>
-                            <p class="font-handwriting text-sm text-[#4a403a]">top of the world</p>
+                            <div class="w-full h-28 bg-[#f7cad0]/40 rounded flex items-center justify-center text-3xl mb-2">💖🌸</div>
+                            <p class="font-handwriting text-sm text-[#4a403a]">happy moments</p>
                         </div>
                     </div>
                     <button id="btn-next" class="w-full py-4 px-8 bg-[#d87093] hover:bg-[#c45c7f] text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 text-base">Read your letter 💌</button>
@@ -339,4 +339,5 @@
                 wrapper.className = "fade-in flex flex-col items-center w-full text-left";
                 wrapper.innerHTML = `
                     <div class="w-full bg-white p-6 sm:p-8 rounded-2xl shadow-xl border border-[#fcd5ce] mb-6 max-h-[65vh] overflow-y-auto">
-                        <p class="text-xs font-semibold text-[#d87093] mb-3">For you, ${recipientName}</p
+                        <p class="text-xs font-semibold text-[#d87093] mb-3">Dear ${recipientName},</p>
+    
