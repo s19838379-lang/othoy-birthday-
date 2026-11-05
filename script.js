@@ -75,16 +75,19 @@ function closePhoto() {
 // SECRET LETTER
 let letterOpened = false;
 
+
 function openLetter() {
-  if (letterOpened) return;
+  const envelope = document.getElementById("envelope");
 
-  letterOpened = true;
+  if (envelope.classList.contains("open")) return;
 
-  document.getElementById("envelope").classList.add("open");
+  envelope.classList.add("open");
 
   document.getElementById("letterHint").innerText =
     "A little message, just for you. ❤️";
 }
+
+
 
 // MUSIC PLAYER
 let musicPlaying = false;
