@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Little Something For You ✨</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Caveat:wght@600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            user-select: none;
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .font-handwriting {
+            font-family: 'Caveat', cursive;
+        }
+        .fade-in {
+            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .bounce-gentle {
+            animation: bounceGentle 3s ease-in-out infinite;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.96); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes bounceGentle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .sparkle {
+            position: absolute;
+            background: radial-gradient(circle, #fff 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+            animation: twinkle 2s infinite ease-in-out;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        .cake-left, .cake-right {
+            transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .sliced .cake-left {
+            transform: translateX(-35px) rotate(-6deg);
+        }
+        .sliced .cake-right {
+            transform: translateX(35px) rotate(6deg);
+        }
+    </style>
+</head>
+<body class="bg-[#fdfbf7] text-[#4a403a] min-h-screen flex flex-col items-center justify-center relative selection:bg-[#ffcad4]">
+
+    <div id="sparkles-container" class="absolute inset-0 pointer-events-none overflow-hidden z-0"></div>
+
+    <main id="app" class="relative z-10 w-full max-w-md min-h-screen flex flex-col items-center justify-center p-6 text-center"></main>
+
+    <script>
+        // Web Audio Synthesizer
+        const sound = {
+            ctx: null,
+            init: function() {
+                if (!this.ctx) {
+                    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                    if (AudioCtx) this.ctx = new AudioCtx();
+                }
+            },
+            playChime: function() {
+                try {
+                    this.init();
+                    if (!this.ctx) return;
+                    const now = this.ctx.currentTime;
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(587.33, now);
+                    osc.frequency.exponentialRampToValueAtTime(880, now + 0.3);
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.6);
+                } catch(e) {}
+            },
+            playCut: function() {
+                try {
+                    this.init();
+                    if (!this.ctx) return;
+                    const now = this.ctx.currentTime;
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(300, now);
+                    osc.frequency.linearRampToValueAtTime(150, now + 0.2);
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.25);
+                } catch(e) {}
+            },
+            playWish: function() {
+                try {
+                    this.init();
+                    if (!this.ctx) return;
+                    const notes = [523.25, 659.25, 783.99, 1046.50];
+                    notes.forEach((freq, idx) => {
+                        const now = this.ctx.currentTime + idx * 0.12;
+                        const osc = this.ctx.createOscillator();
+                        const gain = this.ctx.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(freq, now);
+                        gain.gain.setValueAtTime(0.12, now);
+                        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+                        osc.connect(gain);
+                        gain.connect(this.ctx.destination);
+                        osc.start(now);
+                        osc.stop(now + 0.5);
+                    });
+                } catch(e) {}
+            }
+        };
+
+        // Render sparkles background
+        const container = document.getElementById('sparkles-container');
+        if (container) {
+            for (let i = 0; i < 20; i++) {
+                const s = document.createElement('div');
+                s.className = 'sparkle';
+                s.style.width = (Math.random() * 6 + 2) + 'px';
+                s.style.height = s.style.width;
+                s.style.top = (Math.random() * 100) + '%';
+                s.style.left = (Math.random() * 100) + '%';
+                s.style.animationDelay = (Math.random() * 2) + 's';
+                container.appendChild(s);
+            }
+        }
+
+        // App state
+        let currentStep = 1;
+        const recipientName = "Aanya";
+        const birthdayDate = "28 September";
+        let cakeSliced = false;
+
+        function nextStep() {
+            sound.playChime();
+            currentStep++;
+            renderStep();
+        }
+
+        function restartApp() {
+            sound.playChime();
+            currentStep = 1;
+            cakeSliced = false;
+            renderStep();
+        }
+
+        function sliceCake() {
+            if (cakeSliced) {
+                nextStep();
+                return;
+            }
+            sound.playCut();
+            cakeSliced = true;
+            const cakeContainer = document.getElementById('cake-container');
+            const cutLine = document.getElementById('cut-line');
+            const cakeMsg = document.getElementById('cake-[#msg]');
+            const cakeBtn = document.getElementById('cake-btn');
+
+            if (cakeContainer) cakeContainer.classList.add('sliced');
+            if (cutLine) cutLine.style.display = 'none';
+            if (cakeMsg) cakeMsg.style.display = 'block';
+            if (cakeBtn) cakeBtn.textContent = 'Make a wish ✨';
+        }
+
+        function makeWish() {
+            sound.playWish();
+            const btn = document.getElementById('wish-btn');
+            const status = document.getElementById('wish-status');
+            if (btn) {
+                btn.style.opacity = '0.5';
+                btn.style.pointerEvents = 'none';
+            }
+            if (status) {
+                status.textContent = "Somewhere, a tiny star just said yes ✨";
+                status.style.opacity = '1';
+            }
+            setTimeout(() => {
+                currentStep++;
+                renderStep();
+            }, 2000);
+        }
+
+        function renderStep() {
+            const app = document.getElementById('app');
+            if (!app) return;
+
+            // Clear previous step
+            app.innerHTML = '';
+
+            if (currentStep === 2) {
+                document.body.className = "bg-[#111122] text-white min-h-screen flex flex-col items-center justify-center relative selection:bg-purple-500 transition-colors duration-1000";
+            } else {
+                document.body.className = "bg-[#fdfbf7] text-[#4a403a] min-h-screen flex flex-col items-center justify-center relative selection:bg-[#ffcad4] transition-colors duration-1000";
+            }
+
+            const wrapper = document.createElement('div');
+            wrapper.className = "fade-in flex flex-col items-center w-full";
+
+            if (currentStep === 1) {
+                wrapper.innerHTML = `
+                    <p class="text-xs uppercase tracking-[0.2em] text-[#b5838d] font-semibold mb-2">a little something ✨</p>
+                    <h1 class="text-3xl sm:text-4xl font-serif font-bold text-[#354f52] mb-1">There is something for you</h1>
+                    <p class="text-sm text-[#70655d] mb-8">A tiny birthday surprise, made just for you.</p>
+                    <div class="relative w-72 h-56 mb-8 bounce-gentle flex items-center justify-center">
+                        <div class="absolute -left-10 bottom-6 z-20 w-24 h-28 bg-[#f4a261] rounded-full border-4 border-white shadow-md flex flex-col items-center justify-center transform -rotate-12">
+                            <div class="text-2xl">🧸</div>
+                            <div class="bg-white px-2 py-0.5 rounded-full text-[10px] font-bold text-[#b5838d] shadow-sm mt-1">for ${recipientName}</div>
+                        </div>
+                        <div class="absolute inset-x-0 bottom-0 h-44 bg-[#f3ded8] rounded-2xl shadow-xl border border-[#e6ccb2] flex items-center justify-center overflow-hidden">
+                            <div class="z-10 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-md border border-[#ffcad4] flex items-center gap-2">
+                                <span class="text-red-400">💌</span>
+                                <div class="flex gap-1">
+                                    <span class="w-2 h-2 rounded-full bg-[#ffb5a7]"></span>
+                                    <span class="w-2 h-2 rounded-full bg-[#fcd5ce]"></span>
+                                </div>
+                            </div>
+                            <div class="absolute top-3 right-6 text-2xl">🌾</div>
+                        </div>
+                    </div>
+                    <button id="btn-next" class="w-full py-4 px-8 bg-[#d87093] hover:bg-[#c45c7f] text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 text-base">Open your surprise ✨</button>
+                `;
+                app.appendChild(wrapper);
+                document.getElementById('btn-next').addEventListener('click', nextStep);
+
+            } else if (currentStep === 2) {
+                wrapper.innerHTML = `
+                    <div class="text-4xl mb-4 animate-pulse">🌙</div>
+                    <h1 class="text-3xl sm:text-4xl font-serif font-bold mb-2">Shhh...</h1>
+                    <h2 class="text-2xl font-serif text-[#ffcad4] mb-3">The room is waiting for you.</h2>
+                    <p class="text-sm text-gray-400 mb-10">Someone left the lights off on purpose.</p>
+                    <div class="w-32 h-32 bg-purple-900/40 rounded-full flex items-center justify-center text-5xl mb-8 border border-purple-500/30 bounce-gentle relative">
+                        💤 🧸
+                        <div class="absolute -top-2 right-4 text-xs bg-purple-600 px-2 py-0.5 rounded-full">party hat ready</div>
+                    </div>
+                    <button id="btn-next" class="w-full py-4 px-8 bg-amber-100 hover:bg-white text-[#111122] font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 text-base">Turn on the lights 💡</button>
+                `;
+                app.appendChild(wrapper);
+                document.getElementById('btn-next').addEventListener('click', nextStep);
+
+            } else if (currentStep === 3) {
+                wrapper.innerHTML = `
+                    <p class="text-xs uppercase tracking-[0.2em] text-[#b5838d] font-semibold mb-1">Look who is having a birthday...</p>
+                    <h1 class="text-3xl sm:text-4xl font-serif font-bold text-[#354f52] mb-3">Happy Birthday, ${recipientName} ✨</h1>
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-[#f0ebd8] rounded-full text-xs font-medium text-[#70655d] mb-6 shadow-sm">
+                        <span>🎂</span> ${birthdayDate}
+                    </div>
+                    <div class="relative w-full h-56 bg-gradient-to-b from-[#fce1e4] to-[#fcf4f6] rounded-3xl p-6 shadow-inner flex flex-col items-center justify-center mb-8 border border-[#f7cad0]">
+                        <div class="absolute top-3 left-4 text-2xl">🎈</div>
+                        <div class="absolute top-4 right-6 text-2xl">💐</div>
+                        <div class="text-5xl mb-2 bounce-gentle">🧸🎉</div>
+                        <p class="font-handwriting text-2xl text-[#d87093] transform rotate-[-3deg]">yay, you are here!</p>
+                    </div>
+                    <button id="btn-next" class="w-full py-4 px-8 bg-[#d87093] hover:bg-[#c45c7f] text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 text-base">There is more 🎈</button>
+                `;
+                app.appendChild(wrapper);
+                document.getElementById('btn-next').addEventListener('click', nextStep);
+
+            } else if (currentStep === 4) {
+                wrapper.innerHTML = `
+                    <p class="text-xs uppercase tracking-[0.2em] text-[#d87093] font-semibold mb-1">Cake time 🎉</p>
+                    <h1 class="text-3xl font-serif font-bold text-[#354f52] mb-1">Make the first cut ✨</h1>
+                    <p class="text-xs text-[#70655d] mb-6">Tap the cake or press the button below.</p>
+                    <div id="cake-container" class="relative w-64 h-56 flex items-center justify-center mb-8 cursor-pointer select-none">
+                        <div id="cut-line" class="absolute inset-y-0 w-0.5 border-r-2 border-dashed border-red-400 z-30"></div>
+                        <div class="cake-left absolute left-0 w-32 h-full flex flex-col items-end overflow-hidden">
+                            <div class="w-64 h-48 bg-[#ffb5a7] rounded-t-3xl shadow-md border-b-8 border-[#fcd5ce] relative flex items-center justify-center">
+                                <div class="absolute top-2 left-10 text-xl">🕯️🍓</div>
+                                <div class="absolute top-12 left-8 text-2xl font-serif font-bold text-white/40">🎂</div>
+                            </div>
+                        </div>
+                        <div class="cake-right absolute right-0 w-32 h-full flex flex-col items-start overflow-hidden">
+                            <div class="w-64 h-48 bg-[#ffb5a7] rounded-t-3xl shadow-md border-b-8 border-[#fcd5ce] relative flex items-center justify-center" style="margin-left: -32px;">
+                                <div class="absolute top-2 right-10 text-xl">🍓🕯️</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="cake-[#msg]" style="display:none;" class="mb-4 text-center">
+                        <p class="text-lg font-serif font-bold text-[#d87093]">You did it! 🎂</p>
+                        <p class="text-xs text-[#70655d]">The first slice is always the sweetest one.</p>
+                    </div>
+                    <button id="cake-btn" class="w-full py-4 px-8 bg-[#d87093] hover:bg-[#c45c7f] text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 text-base">Cut the cake 🔪</button>
+                `;
+                app.appendChild(wrapper);
+                document.getElementById('cake-container').addEventListener('click', sliceCake);
+                document.getElementById('cake-btn').addEventListener('click', sliceCake);
+
+            } else if (currentStep === 5) {
+                wrapper.innerHTML = `
+                    <div class="text-6xl mb-4 bounce-gentle">🧸🙏</div>
+                    <h1 class="text-3xl font-serif font-bold text-[#354f52] mb-2">Close your eyes...</h1>
+                    <p class="text-sm text-[#70655d] mb-8">Make a little wish for the year ahead.</p>
+                    <button id="wish-btn" class="w-full py-4 px-8 bg-[#d87093] hover:bg-[#c45c7f] text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 text-base">I made my wish ✨</button>
+                    <p id="wish-status" class="mt-4 text-sm font-handwriting text-[#b5838d] opacity-0 transition-opacity duration-700"></p>
+                `;
+                app.appendChild(wrapper);
+                document.getElementById('wish-btn').addEventListener('click', makeWish);
+
+            } else if (currentStep === 6) {
+                wrapper.innerHTML = `
+                    <h1 class="text-2xl sm:text-3xl font-serif font-bold text-[#354f52] mb-1">Some moments are worth keeping.</h1>
+                    <p class="text-xs text-[#70655d] mb-6">Here is to all the laughs, chaos, and little moments.</p>
+                    <div class="grid grid-cols-2 gap-3 w-full mb-8">
+                        <div class="bg-white p-2.5 pb-6 rounded shadow-md transform -rotate-3 hover:rotate-0 transition-transform">
+                            <div class="w-full h-28 bg-[#fcd5ce] rounded flex items-center justify-center text-3xl mb-2">🧸☀️</div>
+                            <p class="font-handwriting text-sm text-[#4a403a]">that sunny picnic</p>
+                        </div>
+                        <div class="bg-white p-2.5 pb-6 rounded shadow-md transform rotate-3 hover:rotate-0 transition-transform">
+                            <div class="w-full h-28 bg-[#b5838d]/20 rounded flex items-center justify-center text-3xl mb-2">🌙✨</div>
+                            <p class="font-handwriting text-sm text-[#4a403a]">counting stars</p>
+                        </div>
+                        <div class="bg-white p-2.5 pb-6 rounded shadow-md transform rotate-2 hover:rotate-0 transition-transform">
+                            <div class="w-full h-28 bg-[#ffb5a7]/30 rounded flex items-center justify-center text-3xl mb-2">🧁🎂</div>
+                            <p class="font-handwriting text-sm text-[#4a403a]">the great baking</p>
+                        </div>
+                        <div class="bg-white p-2.5 pb-6 rounded shadow-md transform -rotate-2 hover:rotate-0 transition-transform">
+                            <div class="w-full h-28 bg-[#e5989b]/20 rounded flex items-center justify-center text-3xl mb-2">🌍💖</div>
+                            <p class="font-handwriting text-sm text-[#4a403a]">top of the world</p>
+                        </div>
+                    </div>
+                    <button id="btn-next" class="w-full py-4 px-8 bg-[#d87093] hover:bg-[#c45c7f] text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 text-base">Read your letter 💌</button>
+                `;
+                app.appendChild(wrapper);
+                document.getElementById('btn-next').addEventListener('click', nextStep);
+
+            } else if (currentStep === 7) {
+                wrapper.className = "fade-in flex flex-col items-center w-full text-left";
+                wrapper.innerHTML = `
+                    <div class="w-full bg-white p-6 sm:p-8 rounded-2xl shadow-xl border border-[#fcd5ce] mb-6 max
