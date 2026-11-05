@@ -478,3 +478,64 @@ p {
     padding: 75px 15px;
   }
   }
+/* FIX: LETTER VISIBILITY */
+
+.envelope {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+}
+
+.envelope-back {
+  z-index: 0;
+}
+
+.letter-paper {
+  z-index: 1;
+  overflow-y: auto;
+  transition: transform 0.8s ease, height 0.8s ease;
+}
+
+.envelope-front {
+  z-index: 3;
+}
+
+.envelope-flap {
+  z-index: 4;
+  transform-origin: top center;
+  transition: transform 0.7s ease;
+}
+
+/* OPEN ENVELOPE FIX */
+
+.envelope.open .envelope-flap {
+  transform: rotateX(180deg);
+  z-index: 0;
+}
+
+.envelope.open .letter-paper {
+  z-index: 5;
+  transform: translateY(-115px);
+  height: 260px;
+  overflow-y: auto;
+}
+
+.envelope.open .envelope-front {
+  z-index: 2;
+}
+
+/* LETTER TEXT */
+
+.letter-paper h2,
+.letter-paper p,
+.letter-paper h3 {
+  position: relative;
+  z-index: 6;
+}
+
+.letter-paper p {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #713b5b;
+  margin: 12px 0;
+}
