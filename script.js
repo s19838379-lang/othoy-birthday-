@@ -35,12 +35,20 @@ function closePhoto() {
 }
 
 // LETTER
-function openLetter() {
-  document.getElementById("envelope").classList.toggle("open");
 
-  document.getElementById("letterHint").textContent =
-    "A special message for you ❤️";
-}
+function openLetter() {
+  const envelope = document.getElementById("envelope");
+
+  envelope.classList.toggle("open");
+
+  const hint = document.getElementById("letterHint");
+
+  if (envelope.classList.contains("open")) {
+    hint.textContent = "A special message for you ❤️";
+  } else {
+    hint.textContent = "Tap the envelope to open it.";
+  }
+
 
 // MUSIC
 function toggleMusic() {
