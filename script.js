@@ -34,21 +34,22 @@ function closePhoto() {
   document.getElementById("photoModal").classList.remove("show");
 }
 
-// LETTER
-
+// ENVELOPE OPEN / CLOSE
 function openLetter() {
   const envelope = document.getElementById("envelope");
+  const hint = document.getElementById("letterHint");
+  const button = document.getElementById("letterButton");
 
   envelope.classList.toggle("open");
 
-  const hint = document.getElementById("letterHint");
-
   if (envelope.classList.contains("open")) {
     hint.textContent = "A special message for you ❤️";
+    button.textContent = "Close Letter 💌";
   } else {
-    hint.textContent = "Tap the envelope to open it.";
+    hint.textContent = "Tap the button to open your letter.";
+    button.textContent = "Open Your Letter 💌";
   }
-
+}
 
 // MUSIC
 function toggleMusic() {
@@ -84,8 +85,14 @@ function createHearts() {
 
     heart.animate(
       [
-        { transform: "translateY(0)", opacity: 1 },
-        { transform: "translateY(-100vh)", opacity: 0 }
+        {
+          transform: "translateY(0)",
+          opacity: 1
+        },
+        {
+          transform: "translateY(-100vh)",
+          opacity: 0
+        }
       ],
       {
         duration: 3000,
