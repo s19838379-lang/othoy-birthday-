@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,7 +24,7 @@
   <!-- GIFT -->
   <section class="screen" id="gift">
     <div class="content">
-      <div class="gift">🎁</div>
+      <div class="emoji">🎁</div>
       <h1>A Little Surprise!</h1>
       <p>Something special is waiting for you.</p>
       <button class="main-btn" onclick="nextScreen('birthday')">
@@ -48,7 +47,8 @@
         <div class="cake-bottom"></div>
       </div>
 
-      <p>Tap the button to blow the candle!</p>
+      <p>Make a wish and blow the candle!</p>
+
       <button class="main-btn" onclick="blowCandle()">
         Blow Candle 🕯️
       </button>
@@ -117,29 +117,38 @@
       <p class="tag">A LITTLE MESSAGE FOR YOU</p>
       <h1>A Secret Letter 💌</h1>
 
-      <div class="envelope" onclick="openLetter()" id="envelope">
+      <div class="envelope" id="envelope">
+
         <div class="envelope-back"></div>
 
         <div class="letter-paper">
           <h2>Dear Othoy ❤️</h2>
+
           <p>
             Today is your special day.
             I hope your life is filled with
             happiness, laughter and beautiful
             memories.
           </p>
+
           <p>
             Keep shining, keep smiling,
             and never stop being amazing.
           </p>
+
           <h3>With lots of love 💗</h3>
         </div>
 
         <div class="envelope-front"></div>
         <div class="envelope-flap"></div>
+
       </div>
 
-      <p id="letterHint">Tap the envelope to open it.</p>
+      <button class="main-btn" id="letterButton" onclick="openLetter()">
+        Open Your Letter 💌
+      </button>
+
+      <p id="letterHint">Tap the button to open your letter.</p>
 
       <button class="main-btn" onclick="nextScreen('final')">
         Final Surprise ✨
@@ -157,24 +166,25 @@
         beautiful memories and endless smiles.
       </p>
       <h2>Stay Happy Always! 🌸</h2>
+
       <button class="main-btn" onclick="nextScreen('welcome')">
         Start Again ↻
       </button>
     </div>
   </section>
 
-  <!-- PHOTO MODAL -->
+  <!-- PHOTO POPUP -->
   <div class="photo-modal" id="photoModal" onclick="closePhoto()">
     <span class="close">&times;</span>
     <img id="modalImage" src="" alt="Full photo">
   </div>
 
-  <!-- MUSIC -->
+  <!-- BACKGROUND MUSIC -->
   <audio id="music" loop>
     <source src="birthday-song.mp3" type="audio/mpeg">
   </audio>
 
-  <button class="music-btn" onclick="toggleMusic()" id="musicBtn">
+  <button class="music-btn" id="musicBtn" onclick="toggleMusic()">
     🎵 Music
   </button>
 
