@@ -539,3 +539,22 @@ p {
   color: #713b5b;
   margin: 12px 0;
 }
+.video-content {
+  text-align: center;
+  padding: 25px;
+}
+
+.video-box {
+  max-width: 450px;
+  margin: 25px auto;
+  padding: 8px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px #ff69a455;
+}
+
+.video-box video {
+  width: 100%;
+  display: block;
+  border-radius: 15px;
+}
