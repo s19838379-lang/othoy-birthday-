@@ -1,3 +1,17 @@
+function nextScreen(screenId) {
+  document.querySelectorAll(".screen").forEach(function(screen) {
+    screen.classList.remove("active");
+  });
+
+  const target = document.getElementById(screenId);
+
+  if (target) {
+    target.classList.add("active");
+    window.scrollTo(0, 0);
+  } else {
+    alert("Screen not found: " + screenId);
+  }
+}
 // SCREEN NAVIGATION
 function nextScreen(screenId) {
   document.querySelectorAll(".screen").forEach(screen => {
