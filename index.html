@@ -4,31 +4,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>A Little World For You ❤️</title>
+  <title>Happy Birthday Othoy ❤️</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="hearts" id="hearts"></div>
-
-  <!-- MUSIC -->
-  <audio id="music" loop>
-    <source src="birthday-song.mp3" type="audio/mpeg">
-  </audio>
-
-  <button class="music-btn" onclick="toggleMusic()" id="musicBtn">
-    ♫ Music
-  </button>
-
   <!-- WELCOME -->
   <section class="screen active" id="welcome">
-    <div class="welcome-card">
-      <div class="small-text">A SPECIAL SURPRISE FOR YOU</div>
-      <div class="big-heart">♡</div>
-      <h1>Hello, Beautiful!</h1>
-      <p>Someone made something special just for you...</p>
-      <button class="main-btn" onclick="startSurprise()">
-        Open Your Surprise 💌
+    <div class="content">
+      <div class="emoji">🎀</div>
+      <p class="tag">A SPECIAL DAY</p>
+      <h1>Happy Birthday Othoy!</h1>
+      <p>Today is all about you ❤️</p>
+      <button class="main-btn" onclick="nextScreen('gift')">
+        Start Surprise 🎁
       </button>
     </div>
   </section>
@@ -36,97 +25,93 @@
   <!-- GIFT -->
   <section class="screen" id="gift">
     <div class="content">
-      <p class="tag">YOUR SPECIAL DAY 🎀</p>
-      <h1>A Little Gift For You</h1>
-      <p>Tap the gift box to discover your surprise.</p>
-
-      <div class="gift" id="giftBox" onclick="openGift()">
-        <div class="gift-lid"></div>
-        <div class="gift-box"></div>
-        <div class="gift-ribbon"></div>
-        <div class="gift-bow">🎀</div>
-      </div>
-
-      <p class="hint" id="giftHint">Tap to open your gift ✨</p>
+      <div class="gift">🎁</div>
+      <h1>A Little Surprise!</h1>
+      <p>Something special is waiting for you.</p>
+      <button class="main-btn" onclick="nextScreen('birthday')">
+        Open Gift 💝
+      </button>
     </div>
   </section>
 
-  <!-- BIRTHDAY -->
+  <!-- BIRTHDAY CAKE -->
   <section class="screen" id="birthday">
     <div class="content">
-      <p class="tag">TODAY IS ALL ABOUT YOU</p>
-      <h1 class="birthday-title">
-        Happy Birthday!
-      </h1>
-      <h2 class="person-name">Dear Othoy ❤️</h2>
+      <p class="tag">MAKE A WISH</p>
+      <h1>Happy Birthday! 🎂</h1>
 
       <div class="cake">
-  <div class="flame" id="flame">🔥</div>
-  <div class="candle"></div>
-  <div class="cake-top"></div>
-  <div class="cake-middle"></div>
-  <div class="cake-bottom"></div>
+        <div class="flame" id="flame">🔥</div>
+        <div class="candle"></div>
+        <div class="cake-top"></div>
+        <div class="cake-middle"></div>
+        <div class="cake-bottom"></div>
       </div>
-      <p class="message">
-        Make a wish and blow out your candle! ✨
-      </p>
 
+      <p>Tap the button to blow the candle!</p>
       <button class="main-btn" onclick="blowCandle()">
-        Blow The Candle 🌬️
+        Blow Candle 🕯️
       </button>
 
-      <p id="wishMessage"></p>
+      <button class="main-btn" onclick="nextScreen('memories')">
+        Continue ❤️
+      </button>
     </div>
   </section>
 
-  <!-- MEMORIES -->
+  <!-- PHOTO GALLERY -->
   <section class="screen" id="memories">
     <div class="content">
-      <p class="tag">LITTLE MOMENTS, BIG MEMORIES</p>
-      <h1>Beautiful Memories 📸</h1>
-      <p>Every moment is a little treasure.</p>
+      <p class="tag">BEAUTIFUL MEMORIES</p>
+      <h1>Little Moments 📸</h1>
 
       <div class="gallery">
+
         <div class="photo" onclick="showPhoto(this)">
-          <img src="photo1.jpg" alt="Memory 1">
+          <img src="photos/photo1.jpg" alt="Memory 1">
           <span>Sweet Memory ❤️</span>
         </div>
 
         <div class="photo" onclick="showPhoto(this)">
-          <img src="photo2.jpg" alt="Memory 2">
+          <img src="photos/photo2.jpg" alt="Memory 2">
           <span>Little Moments 🌸</span>
         </div>
 
         <div class="photo" onclick="showPhoto(this)">
-          <img src="photo3.jpg" alt="Memory 3">
+          <img src="photos/photo3.jpg" alt="Memory 3">
           <span>Forever Special ✨</span>
         </div>
+
       </div>
 
       <button class="main-btn" onclick="nextScreen('video')">
-  Watch Something Special 🎬
+        Watch Something Special 🎬
       </button>
     </div>
   </section>
-<section class="screen" id="video">
-  <div class="video-content">
-    <p>A SPECIAL MEMORY ❤️</p>
-    <h1>A Little Video For You, Othoy</h1>
 
-    <div class="video-box">
-      <video controls playsinline preload="metadata">
-        <source src="video.mp4" type="video/mp4">
-      </video>
+  <!-- VIDEO SURPRISE -->
+  <section class="screen" id="video">
+    <div class="content video-content">
+      <p class="tag">A SPECIAL MEMORY ❤️</p>
+      <h1>A Little Video For You, Othoy</h1>
+
+      <div class="video-box">
+        <video controls playsinline preload="metadata">
+          <source src="videos/othoy.mp4" type="video/mp4">
+          Your browser does not support video.
+        </video>
+      </div>
+
+      <p>Every moment is special 💗</p>
+
+      <button class="main-btn" onclick="nextScreen('letter')">
+        Continue 💌
+      </button>
     </div>
+  </section>
 
-    <p>Every moment is special 💗</p>
-
-    <button onclick="nextScreen('letter')">
-      Continue 💌
-    </button>
-  </div>
-</section>
-  <!-- LETTER -->
+  <!-- SECRET LETTER -->
   <section class="screen" id="letter">
     <div class="content">
       <p class="tag">A LITTLE MESSAGE FOR YOU</p>
@@ -134,8 +119,9 @@
 
       <div class="envelope" onclick="openLetter()" id="envelope">
         <div class="envelope-back"></div>
+
         <div class="letter-paper">
-          <h2>Dear Bestie ❤️</h2>
+          <h2>Dear Othoy ❤️</h2>
           <p>
             Today is your special day.
             I hope your life is filled with
@@ -148,6 +134,7 @@
           </p>
           <h3>With lots of love 💗</h3>
         </div>
+
         <div class="envelope-front"></div>
         <div class="envelope-flap"></div>
       </div>
@@ -160,34 +147,36 @@
     </div>
   </section>
 
-  <!-- FINAL -->
+  <!-- FINAL SURPRISE -->
   <section class="screen" id="final">
-    <div class="content final-content">
-      <div class="final-heart">💗</div>
-      <p class="tag">A DAY AS BEAUTIFUL AS YOU</p>
-      <h1>Happy Birthday!</h1>
-
-      <h2>To My bestie</h2>
-
-      <p class="final-message">
-        May every new day bring you closer
-        to your dreams. You deserve all the
-        happiness in the world.
+    <div class="content">
+      <div class="emoji">🎂💖🎉</div>
+      <h1>Happy Birthday Othoy!</h1>
+      <p>
+        May your day be filled with happiness,
+        beautiful memories and endless smiles.
       </p>
-
-      <h2 class="love-text">Stay Happy Always ❤️</h2>
-
-      <button class="main-btn" onclick="celebrate()">
-        Celebrate Again 🎉
+      <h2>Stay Happy Always! 🌸</h2>
+      <button class="main-btn" onclick="nextScreen('welcome')">
+        Start Again ↻
       </button>
     </div>
   </section>
 
   <!-- PHOTO MODAL -->
-  <div class="modal" id="photoModal" onclick="closePhoto()">
-    <span class="close">×</span>
-    <img id="largePhoto" alt="Selected memory">
+  <div class="photo-modal" id="photoModal" onclick="closePhoto()">
+    <span class="close">&times;</span>
+    <img id="modalImage" src="" alt="Full photo">
   </div>
+
+  <!-- MUSIC -->
+  <audio id="music" loop>
+    <source src="birthday-song.mp3" type="audio/mpeg">
+  </audio>
+
+  <button class="music-btn" onclick="toggleMusic()" id="musicBtn">
+    🎵 Music
+  </button>
 
   <script src="script.js"></script>
 </body>
