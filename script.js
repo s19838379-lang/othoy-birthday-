@@ -1,70 +1,32 @@
 // SCREEN NAVIGATION
-function nextScreen(id) {
+function nextScreen(screenId) {
   document.querySelectorAll(".screen").forEach(screen => {
     screen.classList.remove("active");
   });
 
-  document.getElementById(id).classList.add("active");
+  const next = document.getElementById(screenId);
 
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-}
-
-// START
-function startSurprise() {
-  nextScreen("gift");
-  createHearts();
-}
-
-// GIFT OPENING
-let giftOpened = false;
-
-function openGift() {
-  if (giftOpened) return;
-
-  giftOpened = true;
-
-  document.getElementById("giftBox").classList.add("opened");
-
-  document.getElementById("giftHint").innerText =
-    "Your surprise is waiting! 💗";
-
-  setTimeout(() => {
-    nextScreen("birthday");
-  }, 1500);
-}
-
-// BLOW CANDLE
-let candleBlown = false;
-
-function blowCandle() {
-  const flame = document.getElementById("flame");
-  const message = document.getElementById("wishMessage");
-  const button = document.querySelector("#birthday .main-btn");
-
-  if (!candleBlown) {
-    flame.classList.add("out");
-
-    message.innerText =
-      "Your wish is on its way to the stars! 🌟";
-
-    candleBlown = true;
-
-    celebrate();
-
-    button.innerText = "See Your Memories 📸";
-  } else {
-    nextScreen("memories");
+  if (next) {
+    next.classList.add("active");
+    window.scrollTo(0, 0);
   }
 }
 
-// PHOTO GALLERY
-function showPhoto(element) {
-  const img = element.querySelector("img");
+// BLOW CANDLE
+function blowCandle() {
+  const flame = document.getElementById("flame");
 
-  document.getElementById("largePhoto").src = img.src;
+  flame.style.opacity = "0";
+  flame.style.transform = "scale(0)";
+
+  createHearts();
+}
+
+// PHOTO VIEWER
+function showPhoto(element) {
+  const image = element.querySelector("img");
+
+  document.getElementById("modalImage").src = image.src;
   document.getElementById("photoModal").classList.add("show");
 }
 
@@ -72,122 +34,57 @@ function closePhoto() {
   document.getElementById("photoModal").classList.remove("show");
 }
 
-// SECRET LETTER
-let letterOpened = false;
-
-
+// LETTER
 function openLetter() {
-  const envelope = document.getElementById("envelope");
+  document.getElementById("envelope").classList.toggle("open");
 
-  if (envelope.classList.contains("open")) return;
-
-  envelope.classList.add("open");
-
-  document.getElementById("letterHint").innerText =
-    "A little message, just for you. ❤️";
+  document.getElementById("letterHint").textContent =
+    "A special message for you ❤️";
 }
 
-
-
-// MUSIC PLAYER
-let musicPlaying = false;
-
+// MUSIC
 function toggleMusic() {
   const music = document.getElementById("music");
-  const btn = document.getElementById("musicBtn");
+  const button = document.getElementById("musicBtn");
 
-  if (!musicPlaying) {
+  if (music.paused) {
     music.play().then(() => {
-      musicPlaying = true;
-      btn.innerText = "♫ Playing";
+      button.textContent = "🔊 Music On";
     }).catch(() => {
-      btn.innerText = "Tap to Play ♫";
+      button.textContent = "Tap to Play 🎵";
     });
   } else {
     music.pause();
-    musicPlaying = false;
-    btn.innerText = "♫ Music";
+    button.textContent = "🎵 Music";
   }
 }
 
-// FLOATING HEARTS
+// HEART ANIMATION
 function createHearts() {
-  const container = document.getElementById("hearts");
-
-  setInterval(() => {
+  for (let i = 0; i < 15; i++) {
     const heart = document.createElement("div");
 
-    heart.className = "heart";
-
-    const symbols = ["❤️", "💗", "💕", "💖", "✨"];
-
-    heart.innerText =
-      symbols[Math.floor(Math.random() * symbols.length)];
-
+    heart.textContent = "❤️";
+    heart.style.position = "fixed";
     heart.style.left = Math.random() * 100 + "vw";
+    heart.style.top = "100vh";
+    heart.style.fontSize = "22px";
+    heart.style.zIndex = "99";
+    heart.style.pointerEvents = "none";
 
-    heart.style.fontSize =
-      (15 + Math.random() * 25) + "px";
+    document.body.appendChild(heart);
 
-    const duration = 4 + Math.random() * 5;
-
-    heart.style.animationDuration = duration + "s";
-
-    container.appendChild(heart);
-
-    setTimeout(() => {
-      heart.remove();
-    }, duration * 1000);
-
-  }, 450);
-}
-
-// CONFETTI CELEBRATION
-function celebrate() {
-  const symbols = ["🎉", "💗", "✨", "🎊", "💕"];
-
-  for (let i = 0; i < 55; i++) {
-    const item = document.createElement("div");
-
-    item.innerText =
-      symbols[Math.floor(Math.random() * symbols.length)];
-
-    item.style.position = "fixed";
-    item.style.left = Math.random() * 100 + "vw";
-    item.style.top = "-30px";
-    item.style.fontSize = "22px";
-    item.style.pointerEvents = "none";
-    item.style.zIndex = "100";
-
-    document.body.appendChild(item);
-
-    const duration = 2000 + Math.random() * 2000;
-
-    item.animate([
+    heart.animate(
+      [
+        { transform: "translateY(0)", opacity: 1 },
+        { transform: "translateY(-100vh)", opacity: 0 }
+      ],
       {
-        transform: "translateY(0) rotate(0deg)",
-        opacity: 1
-      },
-      {
-        transform:
-          `translateY(110vh) rotate(${Math.random() * 720}deg)`,
-        opacity: 0
+        duration: 3000,
+        easing: "ease-out"
       }
-    ], {
-      duration: duration,
-      easing: "ease-in"
-    });
+    );
 
-    setTimeout(() => item.remove(), duration);
+    setTimeout(() => heart.remove(), 3000);
   }
 }
-
-// ESCAPE KEY CLOSES PHOTO
-document.addEventListener("keydown", event => {
-  if (event.key === "Escape") {
-    closePhoto();
-  }
-});
-
-// START FLOATING HEARTS
-createHearts();
